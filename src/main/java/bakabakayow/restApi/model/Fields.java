@@ -23,6 +23,7 @@ public class Fields implements Serializable {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private SportType type;
 
     @ManyToOne

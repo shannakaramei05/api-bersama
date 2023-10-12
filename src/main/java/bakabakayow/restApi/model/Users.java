@@ -24,7 +24,7 @@ public class Users implements Serializable {
 
     private String password;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     private String token;
