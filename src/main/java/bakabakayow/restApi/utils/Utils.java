@@ -11,4 +11,12 @@ public class Utils {
         log.info(type + " =====> url '" + url + "' " + bodyOrParamsOrResponse + " : " + message);
         }
     }
+
+    public static String getCauseMessage(Throwable t) {
+        Throwable cause = t;
+        if(t.getCause() != null) {
+            return getCauseMessage(t.getCause());
+        }
+        return cause.getLocalizedMessage();
+    }
 }

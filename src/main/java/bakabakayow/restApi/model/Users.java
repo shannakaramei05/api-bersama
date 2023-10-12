@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -25,6 +26,12 @@ public class Users implements Serializable {
 
     @Enumerated(EnumType.ORDINAL)
     private UserRole role;
+
+    private String token;
+
+    private String refreshToken;
+
+    private long createdDate;
 
     @OneToMany(mappedBy = "user")
     private List<Bookings> bookings;
