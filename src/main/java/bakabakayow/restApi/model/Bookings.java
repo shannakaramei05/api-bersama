@@ -1,9 +1,11 @@
 package bakabakayow.restApi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.apache.catalina.User;
 
 import java.io.Serializable;
@@ -26,17 +28,18 @@ public class Bookings implements Serializable {
     private LocalDateTime playDateEnd;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookingId;
 
     @ManyToOne
     @JoinColumn(name = "user_id_booking")
+    @JsonBackReference
+    @ToString.Exclude
     private Users user;
 
     @ManyToOne
     @JoinColumn(name = "field_id")
+    @JsonBackReference
+    @ToString.Exclude
     private Fields field;
-
-    @OneToMany(mappedBy = "booking")
-    private List<UsersHasBooking> usersHasBookings;
 }

@@ -1,9 +1,10 @@
 package bakabakayow.restApi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,11 +13,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(exclude = "fields")
 @Table(name="venues")
 public class Venues implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long venueId;
 
     private String name;
@@ -27,9 +29,13 @@ public class Venues implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
+    @ToString.Exclude
     private Users user;
 
-    @OneToMany(mappedBy = "venue")
+    @OneToMany(mappedBy = "venue",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @JsonManagedReference
     private List<Fields> fields;
 
 }

@@ -1,10 +1,12 @@
 package bakabakayow.restApi.model;
 
 import bakabakayow.restApi.constants.UserRole;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -27,19 +29,15 @@ public class Users implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private String token;
-
-    private String refreshToken;
-
     private long createdDate;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @JsonManagedReference
     private List<Bookings> bookings;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @ToString.Exclude
+    @JsonManagedReference
     private List<Venues> venues;
-
-    @OneToMany(mappedBy = "user")
-    private List<UsersHasBooking> usersHasBookings;
-
 }
