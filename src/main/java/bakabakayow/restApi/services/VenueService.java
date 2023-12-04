@@ -1,6 +1,7 @@
 package bakabakayow.restApi.services;
 
 import bakabakayow.restApi.dto.Response;
+import bakabakayow.restApi.model.Bookings;
 import bakabakayow.restApi.model.Fields;
 import bakabakayow.restApi.model.Venues;
 import bakabakayow.restApi.repository.VenueRepository;
@@ -19,6 +20,10 @@ import java.util.Set;
 public class VenueService {
 
     private VenueRepository venueRepository;
+
+    public boolean isExist(Long id) {
+        return venueRepository.existsById(id);
+    }
 
     public Response<List<Venues>> getAllVenues() {
         List<Venues> listOfVenues= venueRepository.findAll();

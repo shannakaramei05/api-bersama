@@ -9,5 +9,4 @@ import java.util.List;
 @Repository
 public interface VenueRepository extends JpaRepository<Venues,Long> {
 
-    List<Venues> findAll();
 }

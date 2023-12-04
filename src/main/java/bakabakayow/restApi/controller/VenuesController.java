@@ -1,16 +1,15 @@
 package bakabakayow.restApi.controller;
 
 import bakabakayow.restApi.dto.Response;
+import bakabakayow.restApi.model.Bookings;
 import bakabakayow.restApi.model.Venues;
+import bakabakayow.restApi.services.BookingService;
 import bakabakayow.restApi.services.VenueService;
 import bakabakayow.restApi.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +19,8 @@ import java.util.List;
 public class VenuesController {
 
     private VenueService venueService;
+    private BookingService bookingService;
+
     @GetMapping("/")
     public ResponseEntity<Response<List<Venues>>> getAllVenues () {
         Utils.setLogging("/api/v1/venues" , "request" , null , "");
@@ -31,5 +32,12 @@ public class VenuesController {
     @GetMapping("/{id}")
     public ResponseEntity<Response<Venues>> getVenue(@PathVariable Long id) {
         return ResponseEntity.ok(venueService.getVenuesId(id));
+    }
+
+    @PostMapping("/{id}/bookings")
+    public ResponseEntity<Response<Bookings>> bookVenue(@PathVariable Long id , @RequestBody Bookings booking) {
+        if(!venueService.isExist(id)) {
+        }
+        return ResponseEntity.ok(bookingService.addScheduleById(booking));
     }
 }

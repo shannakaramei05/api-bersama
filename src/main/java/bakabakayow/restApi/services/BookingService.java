@@ -18,7 +18,6 @@ public class BookingService {
 
     private BookingRepository bookingRepository;
 
-
     public Response<List<Bookings>> getAllBookings() {
         return SetResponse.setStatusMessageSuccess(bookingRepository.findAll());
     }
@@ -26,5 +25,15 @@ public class BookingService {
     public Response<Bookings> getBookingID(Long id) {
         Optional<Bookings> bookedId = bookingRepository.findById(id);
         return SetResponse.setStatusMessageSuccess(bookedId.get());
+    }
+
+    public Response<Bookings> addScheduleById(Bookings booking) {
+        Bookings booked = new Bookings();
+        booked.setUser(booking.getUser());
+        booked.setField(booking.getField());
+        booked.setPlayDateStart(booking.getPlayDateStart());
+        booked.setPlayDateEnd(booking.getPlayDateEnd());
+        bookingRepository.save(booked);
+        return SetResponse.setStatusMessageSuccess(booked);
     }
 }
