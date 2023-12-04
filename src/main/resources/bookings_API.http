@@ -1,0 +1,9 @@
+###
+GET localhost:8080/v1/api/bookings/
+Content-Type: application/json
+###
+
+###
+GET localhost:8080/v1/api/bookings/3
+Content-Type: application/json
+###

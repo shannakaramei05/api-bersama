@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,5 +26,10 @@ public class VenuesController {
         Response<List<Venues>> response = venueService.getAllVenues();
         Utils.setLogging("/api/v1/venues", "response", "response", response.toString());
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Response<Venues>> getVenue(@PathVariable Long id) {
+        return ResponseEntity.ok(venueService.getVenuesId(id));
     }
 }
