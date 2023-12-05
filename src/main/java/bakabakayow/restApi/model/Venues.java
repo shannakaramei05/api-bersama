@@ -34,8 +34,8 @@ public class Venues implements Serializable {
     private Users user;
 
     @OneToMany(mappedBy = "venue",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @ToString.Exclude
     @JsonManagedReference
+    @ToString.Exclude
     private List<Fields> fields;
 
 }

@@ -1,6 +1,8 @@
 package bakabakayow.restApi.model;
 
 import bakabakayow.restApi.constants.UserRole;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
 
     private String email;
@@ -31,13 +34,11 @@ public class Users implements Serializable {
 
     private long createdDate;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    @ToString.Exclude
-    @JsonManagedReference
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Bookings> bookings;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    @ToString.Exclude
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Venues> venues;
 }

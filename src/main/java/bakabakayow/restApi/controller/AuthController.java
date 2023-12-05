@@ -1,6 +1,7 @@
 package bakabakayow.restApi.controller;
 
 import bakabakayow.restApi.constants.UserRole;
+import bakabakayow.restApi.dto.RegisterUserDTO;
 import bakabakayow.restApi.dto.Response;
 import bakabakayow.restApi.model.Users;
 import bakabakayow.restApi.services.UserService;
@@ -25,8 +26,13 @@ public class AuthController {
     }
 
     @PostMapping("/create-user")
-    public ResponseEntity<Response<?>> createNewUser(@RequestBody Integer user_id, String password, String email, UserRole role) {
-        Response<?> response = userService.createNewUser(user_id,email,password,role);
+    public ResponseEntity<Response<?>> createNewUser(@RequestBody RegisterUserDTO registerUserDTO) {
+        Response<?> response = userService.createNewUser(registerUserDTO);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{role}")
+    public ResponseEntity<Response<List<Users>>> usersByRole(@PathVariable UserRole role) {
+        return ResponseEntity.ok(userService.getUserByRole(role));
     }
 }

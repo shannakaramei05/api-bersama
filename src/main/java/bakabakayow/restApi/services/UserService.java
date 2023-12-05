@@ -1,6 +1,7 @@
 package bakabakayow.restApi.services;
 
 import bakabakayow.restApi.constants.UserRole;
+import bakabakayow.restApi.dto.RegisterUserDTO;
 import bakabakayow.restApi.dto.Response;
 import bakabakayow.restApi.model.Users;
 import bakabakayow.restApi.repository.UserRepository;
@@ -33,19 +34,22 @@ public class UserService {
         return SetResponse.setStatusMessageSuccess(userRepository.findAll());
     }
 
-    public Response<?> createNewUser (Integer userId, String email, String password, UserRole role) {
+    public Response<List<Users>> getUserByRole(UserRole role) {
+        return SetResponse.setStatusMessageSuccess(userRepository.findUsersByRole(role));
+    }
+
+    public Response<?> createNewUser (RegisterUserDTO req) {
         long unixTime = System.currentTimeMillis()/1000L;
         Users newUser = new Users();
-        Optional<Users> user = userRepository.findUserByEmail(email);
+        Optional<Users> user = userRepository.findUserByEmail(req.getEmail());
 
         if(user.isPresent()) {
             return SetResponse.setResponseEmailAreadyUsed();
         }else {
-            String encPassword = passwordEncoder.encode(password);
-            newUser.setUserId(userId);
-            newUser.setEmail(email);
+            String encPassword = passwordEncoder.encode(req.getPassword());
+            newUser.setEmail(req.getEmail());
             newUser.setPassword(encPassword);
-            newUser.setRole(role);
+            newUser.setRole(req.getRole());
             newUser.setCreatedDate(unixTime);
             userRepository.save(newUser);
             return SetResponse.setStatusMessageSuccess(newUser.getUserId());

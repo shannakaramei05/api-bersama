@@ -1,17 +1,18 @@
 use api_bersama;
 
+SELECT * FROM users;
 SELECT * FROM fields;
 SELECT * FROM venues;
-SELECT * FROM users;
 SELECT * FROM bookings;
 
 
-UPDATE venues SET user_id = 1 WHERE venue_id=1;
+
+# UPDATE venues SET user_id =1 WHERE venue_id=1;
 # insert into venues(venue_id, address, name, phone) VALUE (1,'Jln Merdeka','Brave Sport Stadion','0000000');
 # insert into fields (field_id, name, type, venues_id) VALUE (1,'Baka Mini Soccers','MINISOCCER',1)
 
-# INSERT INTO Venues (venue_id,name, phone, address)
-# VALUES (2,'Venue 1', '123-456-7890', '123 Main Street');
+# INSERT INTO Venues (venue_id,name, phone, address,user_id)
+# VALUES (2,'BakaSport', '123-456-7890', '123 Main Street',52);
 #
 # INSERT INTO Venues (venue_id,name, phone, address)
 # VALUES (3,'Venue 2', '987-654-3210', '456 Oak Avenue');

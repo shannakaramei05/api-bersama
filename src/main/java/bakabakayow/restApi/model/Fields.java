@@ -30,13 +30,12 @@ public class Fields implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="venues_id")
-    @ToString.Exclude
     @JsonBackReference
+    @ToString.Exclude
     private Venues venue;
 
-    @OneToMany(mappedBy = "field",fetch = FetchType.EAGER)
-    @ToString.Exclude
-    @JsonManagedReference
+    @OneToMany(mappedBy = "field",fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Bookings> bookings;
 
 }

@@ -4,6 +4,6 @@ Content-Type: application/json
 ###
 
 ###
-GET localhost:8080/v1/api/bookings/3
+GET localhost:8080/v1/api/bookings/1
 Content-Type: application/json
 ###

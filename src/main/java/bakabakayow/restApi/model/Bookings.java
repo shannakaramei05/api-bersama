@@ -33,13 +33,9 @@ public class Bookings implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id_booking")
-    @JsonBackReference
-    @ToString.Exclude
     private Users user;
 
     @ManyToOne
     @JoinColumn(name = "field_id")
-    @JsonBackReference
-    @ToString.Exclude
     private Fields field;
 }
