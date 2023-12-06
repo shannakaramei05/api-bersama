@@ -14,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "fields")
+@ToString(exclude = {"user"})
 @Table(name="venues")
 public class Venues implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,12 +31,10 @@ public class Venues implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonBackReference
-    @ToString.Exclude
     private Users user;
 
     @OneToMany(mappedBy = "venue",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
-    @ToString.Exclude
     private List<Fields> fields;
 
 }

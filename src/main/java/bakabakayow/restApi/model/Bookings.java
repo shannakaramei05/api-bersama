@@ -1,6 +1,7 @@
 package bakabakayow.restApi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,8 @@ import java.util.List;
 @Table(name = "bookings")
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@ToString(exclude = {"field"})
 public class Bookings implements Serializable {
     private static final long serialVersionUID = 1L;
     @Temporal(TemporalType.TIMESTAMP)
@@ -30,12 +33,13 @@ public class Bookings implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookingId;
-
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "user_id_booking")
+    @JoinColumn(name = "userId")
     private Users user;
 
+    @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "field_id")
+    @JoinColumn(name = "fieldId")
     private Fields field;
 }
