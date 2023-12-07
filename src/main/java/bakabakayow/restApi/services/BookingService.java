@@ -11,6 +11,7 @@ import bakabakayow.restApi.repository.FieldRepository;
 import bakabakayow.restApi.repository.UserRepository;
 import bakabakayow.restApi.repository.VenueRepository;
 import bakabakayow.restApi.utils.SetResponse;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -59,12 +60,15 @@ public class BookingService {
         return SetResponse.setStatusMessageSuccess(booked);
     }
 
-    public Response<List<Bookings>> getBookDetailsBetween(Long id, LocalDateTime date) {
-        Optional<Venues> venue = venueRepository.findById(id);
-        if(venue.isPresent()) {
-            List<Bookings> data = bookingRepository.findByField_Venue_VenueIdAndPlayDateStartBetween(id,date,date.plusDays(1));
-            return SetResponse.setStatusMessageSuccess(data);
-        }
-        return SetResponse.setErrorResponse("404", "Not Found");
+    public Response<List<Bookings>> getBookDetailsBetween(Long id, LocalDateTime start, LocalDateTime end) {
+        Venues venue = venueRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Venue Not Found with Id " + id));;
+//        Optional<Fields> field = fieldRepository.findById(id);
+
+        Fields field = venue.getFields().stream().findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("No fields found for Venue with Id " + id));
+
+        List<Bookings> bookings = bookingRepository.findByFieldAndPlayDateStartBetween(field,start,end);
+
+        return SetResponse.setStatusMessageSuccess(bookings);
     }
 }

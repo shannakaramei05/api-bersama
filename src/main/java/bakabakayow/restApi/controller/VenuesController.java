@@ -44,9 +44,17 @@ public class VenuesController {
         return ResponseEntity.ok(bookingService.addSchedule(booking));
     }
 
-    @GetMapping("/bookings/{id}/all")
-    public Response<Response<List<Bookings>>> getVenueDetailsAndBookings(@PathVariable Long id) {
-        LocalDateTime date = LocalDateTime.now();
-        return SetResponse.setStatusMessageSuccess(bookingService.getBookDetailsBetween(id,date));
+    @GetMapping("/bookings/{venueId}")
+    public Response<List<Bookings>> getVenueDetailsAndBookings(
+            @PathVariable Long venueId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam (required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
+        if(start == null) {
+            start = LocalDateTime.now();
+        }
+        if (endDate == null) {
+            endDate = LocalDateTime.now().plusDays(1).minusSeconds(1);
+        }
+        return bookingService.getBookDetailsBetween(venueId,start,endDate);
     }
 }

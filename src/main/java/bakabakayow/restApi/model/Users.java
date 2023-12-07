@@ -21,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name="users")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@ToString(exclude = {"fields", "bookings", "venues"})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
