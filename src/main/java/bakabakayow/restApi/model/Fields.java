@@ -14,14 +14,14 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "venue")
-@ToString(exclude={"venue"})
+@EqualsAndHashCode(exclude = {"venue","bookings"})
+@ToString(exclude={"venue","bookings"})
 @Table(name = "fields")
 public class Fields implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fieldId;
 
     private String name;
@@ -30,11 +30,11 @@ public class Fields implements Serializable {
     private SportType type;
 
     @ManyToOne
-    @JoinColumn(name="venuesId")
+    @JoinColumn(name="venue_id")
     @JsonBackReference
     private Venues venue;
 
-    @OneToMany(mappedBy = "field",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "field",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Bookings> bookings;
 

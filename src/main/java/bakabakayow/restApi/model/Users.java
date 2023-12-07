@@ -24,7 +24,7 @@ import java.util.List;
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
 
     private String email;
@@ -36,11 +36,11 @@ public class Users implements Serializable {
 
     private long createdDate;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Bookings> bookings;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Venues> venues;
 }

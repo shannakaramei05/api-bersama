@@ -14,7 +14,6 @@ public class VenuesDTO {
     private String name;
     private String phone;
     private String address;
-    private Users user;
-    private List<Fields> fields;
+    private Long userId;
 
 }

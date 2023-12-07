@@ -27,6 +27,7 @@ public class VenueService {
 
     public Response<List<Venues>> getAllVenues() {
         List<Venues> listOfVenues= venueRepository.findAll();
+
         return SetResponse.setStatusMessageSuccess(listOfVenues);
     }
 

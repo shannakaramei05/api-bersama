@@ -1,16 +1,21 @@
 package bakabakayow.restApi.controller;
 
+import bakabakayow.restApi.dto.BookingsDTO;
 import bakabakayow.restApi.dto.Response;
 import bakabakayow.restApi.model.Bookings;
 import bakabakayow.restApi.model.Venues;
 import bakabakayow.restApi.services.BookingService;
 import bakabakayow.restApi.services.VenueService;
+import bakabakayow.restApi.utils.SetResponse;
 import bakabakayow.restApi.utils.Utils;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -34,10 +39,14 @@ public class VenuesController {
         return ResponseEntity.ok(venueService.getVenuesId(id));
     }
 
-    @PostMapping("/{id}/bookings")
-    public ResponseEntity<Response<Bookings>> bookVenue(@PathVariable Long id , @RequestBody Bookings booking) {
-        if(!venueService.isExist(id)) {
-        }
-        return ResponseEntity.ok(bookingService.addScheduleById(booking));
+    @PostMapping("/bookings")
+    public ResponseEntity<Response<Bookings>> createBooking (@RequestBody BookingsDTO booking) {
+        return ResponseEntity.ok(bookingService.addSchedule(booking));
+    }
+
+    @GetMapping("/bookings/{id}/all")
+    public Response<Response<List<Bookings>>> getVenueDetailsAndBookings(@PathVariable Long id) {
+        LocalDateTime date = LocalDateTime.now();
+        return SetResponse.setStatusMessageSuccess(bookingService.getBookDetailsBetween(id,date));
     }
 }

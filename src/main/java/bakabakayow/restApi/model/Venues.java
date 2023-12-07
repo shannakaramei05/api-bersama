@@ -14,12 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(exclude = "fields")
-@ToString(exclude = {"user"})
+@ToString(exclude = {"user","fields"})
 @Table(name="venues")
 public class Venues implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long venueId;
 
     private String name;

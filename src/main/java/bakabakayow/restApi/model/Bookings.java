@@ -31,15 +31,15 @@ public class Bookings implements Serializable {
     private LocalDateTime playDateEnd;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bookingId;
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private Users user;
 
     @JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "fieldId")
+    @JoinColumn(name = "field_id")
     private Fields field;
 }
