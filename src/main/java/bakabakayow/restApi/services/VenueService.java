@@ -71,4 +71,18 @@ public class VenueService {
             throw new EntityNotFoundException("Venue Not Found");
         }
     }
+
+    public Venues updateDetailVenue(Long id,VenuesDTO venuesDTO) {
+        Venues existingVenue = getVenueById(id).orElseThrow(()-> new EntityNotFoundException("Venue Not Found"));
+
+        Users user = userRepository.findById(venuesDTO.getUserId()).orElseThrow(()->new EntityNotFoundException("User Not Found"));
+
+        existingVenue.setName(venuesDTO.getName());
+        existingVenue.setPhone(venuesDTO.getPhone());
+        existingVenue.setAddress(venuesDTO.getAddress());
+        existingVenue.setUser(user);
+
+        venueRepository.save(existingVenue);
+        return existingVenue;
+    }
 }

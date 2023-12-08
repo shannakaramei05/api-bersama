@@ -4,11 +4,12 @@ SELECT * FROM users;
 SELECT * FROM fields;
 SELECT * FROM venues;
 SELECT * FROM bookings;
+SELECT * FROM users_has_bookings;
 
 # delete from bookings where booking_id=2;
 
 
-insert into venues (venue_id, address, name, phone, user_id) VALUE (1,'Jln Merdeka','Brave Sport Stadion','0000000',2);
+insert into venues (venue_id, address, name, phone, user_id) VALUE (3,'Jln Pahlawan','Brave Sport Stadion','0000000',2);
 
 # update fields set venue_id=1 where field_id=1;
 # UPDATE venues SET user_id =1 WHERE venue_id=1;
@@ -39,4 +40,4 @@ INSERT INTO bookings (booking_id, play_date_end, play_date_start, field_id, user
 VALUES (3,'2023-12-03T13:00:00', '2023-12-03T16:00:00', 2, 2);
 
 INSERT INTO users (email, name, password, role)
-VALUES ('owner@email.com', 'Nerd', 'password@', 'OWNER');
+VALUES ('USERMANIAC@email.com', 'SportBoy', 'password@', 'USER');

@@ -39,12 +39,19 @@ public class VenuesController {
     }
 
     @PostMapping("/{venueId}/bookings")
-    public ResponseEntity<Bookings> bookingField(
+    public ResponseEntity<Bookings> createBookingVenue(
             @PathVariable Long venueId,
             @RequestBody BookingsDTO bookingsDTO
             ) {
 
         Bookings booking = venueService.createBooking(venueId,bookingsDTO);
         return new ResponseEntity<>(booking,HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{venueId}")
+    public ResponseEntity<Venues> updateVenue(@PathVariable Long venueId, @RequestBody VenuesDTO venuesDTO) {
+        Venues venue = venueService.updateDetailVenue(venueId,venuesDTO);
+        return new ResponseEntity<>(venue,HttpStatus.ACCEPTED);
+
     }
 }
