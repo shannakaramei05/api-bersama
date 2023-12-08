@@ -20,28 +20,29 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="users")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@ToString(exclude = {"fields", "bookings", "venues"})
 public class Users implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
+    private Long id;
+
+    private String name;
 
     private String email;
+
 
     private String password;
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    private long createdDate;
-
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(
+            name = "users_has_bookings",
+            joinColumns = @JoinColumn(name="users_id"),
+            inverseJoinColumns = @JoinColumn(name = "bookings_id")
+    )
     private List<Bookings> bookings;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Venues> venues;
 }

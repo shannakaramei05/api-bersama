@@ -1,22 +1,17 @@
 package bakabakayow.restApi.controller;
 
 import bakabakayow.restApi.dto.BookingsDTO;
-import bakabakayow.restApi.dto.Response;
+import bakabakayow.restApi.dto.VenuesDTO;
 import bakabakayow.restApi.model.Bookings;
 import bakabakayow.restApi.model.Venues;
-import bakabakayow.restApi.services.BookingService;
 import bakabakayow.restApi.services.VenueService;
-import bakabakayow.restApi.utils.SetResponse;
-import bakabakayow.restApi.utils.Utils;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/venues")
@@ -24,37 +19,32 @@ import java.util.List;
 public class VenuesController {
 
     private VenueService venueService;
-    private BookingService bookingService;
 
     @GetMapping("/")
-    public ResponseEntity<Response<List<Venues>>> getAllVenues () {
-        Utils.setLogging("/api/v1/venues" , "request" , null , "");
-        Response<List<Venues>> response = venueService.getAllVenues();
-        Utils.setLogging("/api/v1/venues", "response", "response", response.toString());
-        return ResponseEntity.ok(response);
+    public ResponseEntity<List<Venues>> getAllVenues() {
+        List<Venues> venues = venueService.getAllVenues();
+        return ResponseEntity.ok(venues);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Response<Venues>> getVenue(@PathVariable Long id) {
-        return ResponseEntity.ok(venueService.getVenuesId(id));
+    public ResponseEntity<Venues> getVenueById(@PathVariable Long id) {
+        Optional<Venues> venue= venueService.getVenueById(id);
+        return venue.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/bookings")
-    public ResponseEntity<Response<Bookings>> createBooking (@RequestBody BookingsDTO booking) {
-        return ResponseEntity.ok(bookingService.addSchedule(booking));
+    @PostMapping("/")
+    public ResponseEntity<Venues> registerVenue(@RequestBody VenuesDTO venuesDTO) {
+        Venues newVenue = venueService.registerVenue(venuesDTO);
+        return new ResponseEntity<>(newVenue, HttpStatus.CREATED);
     }
 
-    @GetMapping("/bookings/{venueId}")
-    public Response<List<Bookings>> getVenueDetailsAndBookings(
+    @PostMapping("/{venueId}/bookings")
+    public ResponseEntity<Bookings> bookingField(
             @PathVariable Long venueId,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam (required = false)@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {
-        if(start == null) {
-            start = LocalDateTime.now();
-        }
-        if (endDate == null) {
-            endDate = LocalDateTime.now().plusDays(1).minusSeconds(1);
-        }
-        return bookingService.getBookDetailsBetween(venueId,start,endDate);
+            @RequestBody BookingsDTO bookingsDTO
+            ) {
+
+        Bookings booking = venueService.createBooking(venueId,bookingsDTO);
+        return new ResponseEntity<>(booking,HttpStatus.CREATED);
     }
 }

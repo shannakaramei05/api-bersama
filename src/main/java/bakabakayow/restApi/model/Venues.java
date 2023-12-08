@@ -13,8 +13,6 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "fields")
-@ToString(exclude = {"user","fields"})
 @Table(name="venues")
 public class Venues implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,10 +28,9 @@ public class Venues implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonBackReference
     private Users user;
 
-    @OneToMany(mappedBy = "venue",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "venue")
     @JsonManagedReference
     private List<Fields> fields;
 

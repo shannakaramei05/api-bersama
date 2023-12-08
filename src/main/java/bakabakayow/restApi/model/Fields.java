@@ -14,15 +14,13 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"venue","bookings"})
-@ToString(exclude={"venue","bookings"})
 @Table(name = "fields")
 public class Fields implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long fieldId;
+    private Long id;
 
     private String name;
 
@@ -34,8 +32,5 @@ public class Fields implements Serializable {
     @JsonBackReference
     private Venues venue;
 
-    @OneToMany(mappedBy = "field",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private List<Bookings> bookings;
 
 }
