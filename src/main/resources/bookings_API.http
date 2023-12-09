@@ -4,19 +4,15 @@ Content-Type: application/json
 ###
 
 ###
-GET localhost:8080/v1/api/bookings/1
+GET localhost:8080/v1/api/bookings/2
 Content-Type: application/json
 ###
 
 ###
-POST localhost:8080/api/v1/venues/bookings
+POST localhost:8080/v1/api/bookings/2/join
 Content-Type: application/json
 
 {
-  "playDateStart": "2023-12-06T10:00:00",
-  "playDateEnd": "2023-12-06T12:00:00",
-  "userId": 3,
-  "fieldName":"Baka Mini Soccers"
+  "userId": 3
 }
 
-###

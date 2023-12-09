@@ -34,6 +34,7 @@ public class Bookings implements Serializable {
     private LocalDateTime playDateEnd;
 
     @ManyToMany(mappedBy = "bookings")
+    @JsonManagedReference
     private List<Users> registeredUser;
 
     @ManyToOne

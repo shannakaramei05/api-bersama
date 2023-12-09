@@ -1,6 +1,7 @@
 package bakabakayow.restApi.services;
 
 import bakabakayow.restApi.dto.BookingsDTO;
+import bakabakayow.restApi.dto.RequestJoinBooking;
 import bakabakayow.restApi.dto.Response;
 import bakabakayow.restApi.model.Bookings;
 import bakabakayow.restApi.model.Fields;
@@ -27,6 +28,7 @@ import java.util.Optional;
 public class BookingService {
 
     private BookingRepository bookingRepository;
+    private UserRepository userRepository;
 
     public Response<List<Bookings>> getAllBookings() {
         return SetResponse.setStatusMessageSuccess(bookingRepository.findAll());
@@ -35,6 +37,20 @@ public class BookingService {
     public Response<Bookings> getBookingID(Long id) {
         Bookings booking = bookingRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Booking Not Found"));
         return SetResponse.setStatusMessageSuccess(booking);
+    }
+
+    public Response<Bookings> addUserToBooking(Long bookingId,RequestJoinBooking userRequest) {
+        Optional<Bookings> booking = bookingRepository.findById(bookingId);
+        if(booking.isPresent()) {
+            Users newUser = userRepository.findById(userRequest.getUserId()).orElseThrow(()-> new EntityNotFoundException("User Not Found"));
+
+            booking.get().getRegisteredUser().add(newUser);
+            newUser.getBookings().add(booking.get());
+            bookingRepository.save(booking.get());
+            userRepository.save(newUser);
+            return SetResponse.setStatusMessageSuccess(booking.get());
+        }
+        return SetResponse.setErrorResponse("404", "Booking Not Found");
     }
 
 //    public Response<Bookings> addSchedule(BookingsDTO bookingsDTO) {

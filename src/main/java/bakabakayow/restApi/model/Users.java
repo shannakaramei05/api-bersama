@@ -43,6 +43,7 @@ public class Users implements Serializable {
             joinColumns = @JoinColumn(name="users_id"),
             inverseJoinColumns = @JoinColumn(name = "bookings_id")
     )
+    @JsonBackReference
     private List<Bookings> bookings;
 
 }

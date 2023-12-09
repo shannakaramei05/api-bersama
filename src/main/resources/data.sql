@@ -1,4 +1,4 @@
-use test_api_bersama;
+use api_bersama;
 
 SELECT * FROM users;
 SELECT * FROM fields;
@@ -18,6 +18,8 @@ insert into fields(id, name, type, venue_id) VALUE (1,'Baka Mini Soccers','MINIS
 
 INSERT INTO Venues (venue_id, address, name, phone, user_id)
 VALUES (1,'BakaSport', '123 Main Street', '123-456-7890',1);
+
+update venues set user_id =3 where venue_id=1;
 #
 # INSERT INTO Venues (venue_id,name, phone, address)
 # VALUES (3,'Venue 2', '987-654-3210', '456 Oak Avenue');
@@ -41,3 +43,9 @@ VALUES (3,'2023-12-03T13:00:00', '2023-12-03T16:00:00', 2, 2);
 
 INSERT INTO users (email, name, password, role)
 VALUES ('USERMANIAC@email.com', 'SportBoy', 'password@', 'USER');
+
+INSERT INTO users (email, name, password, role)
+VALUES ('OWNER@email.com', 'RIch Guy', 'password@', 'OWNER');
+
+INSERT INTO users (email, name, password, role)
+VALUES ('OWNER2@email.com', 'Cool Guy ', 'password@', 'OWNER');
