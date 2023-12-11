@@ -1,41 +1,49 @@
-//package bakabakayow.restApi.services;
-//
-//import bakabakayow.restApi.dto.Response;
-//import bakabakayow.restApi.model.Users;
-//import bakabakayow.restApi.repository.UserRepository;
-//import bakabakayow.restApi.utils.SetResponse;
-//import io.jsonwebtoken.Claims;
-//import io.jsonwebtoken.ExpiredJwtException;
-//import io.jsonwebtoken.Jwts;
-//import io.jsonwebtoken.SignatureAlgorithm;
-//import jakarta.annotation.PostConstruct;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.stereotype.Service;
-//import org.springframework.web.client.RestTemplate;
-//
-//import javax.crypto.spec.SecretKeySpec;
-//import java.security.Key;
-//import java.util.Base64;
-//import java.util.Date;
-//import java.util.Optional;
-//import java.util.Set;
-//
-//@Service
-//@Slf4j
-//public class AuthorizationService {
-//
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//    @Autowired
-//    private RestTemplate restTemplate;
-//
-//    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//
+package bakabakayow.restApi.services;
+
+import bakabakayow.restApi.dto.AuthDto;
+import bakabakayow.restApi.dto.Response;
+import bakabakayow.restApi.model.Users;
+import bakabakayow.restApi.repository.UserRepository;
+import bakabakayow.restApi.utils.SetResponse;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.annotation.PostConstruct;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
+import java.util.Base64;
+import java.util.Date;
+import java.util.Optional;
+import java.util.Set;
+
+@Service
+@Slf4j
+@AllArgsConstructor
+public class AuthorizationService {
+
+    private UserRepository userRepository;
+
+    private PasswordEncoder passwordEncoder;
+
+//    public Response<Users> login(AuthDto authDto) {
+//        Optional<Users> user = userRepository.findUserByEmail(authDto.getEmail());
+//        if(user.isEmpty()) {
+//            return SetResponse.setResponseEmailNotFound();
+//        }
+//        if(passwordEncoder.matches(authDto.getPassword(),user.get().getPassword()))
+//    }
+
+
 //    @Value("${security.jwt.token.secret-key}")
 //    private String secretKey;
 //
@@ -54,7 +62,7 @@
 //        Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secretKey),SignatureAlgorithm.ES256.getJcaName());
 //        return Jwts.builder().setClaims(claims).setIssuedAt(today).setExpiration(validity).signWith(hmacKey).compact();
 //    }
-//
+
 //    public Response<Users> validateToken (String token) {
 //        String userEmail = "";
 //        Users user = null;
@@ -101,18 +109,6 @@
 //
 //        return response;
 //    }
-//
-//    public Response<Users> createNewUser (Users newUser) {
-//        Optional<Users> user = userRepository.findUserByEmail(newUser.getEmail());
-//        if(user.isPresent()) {
-//            return SetResponse.setResponseEmailAreadyUsed();
-//        }
-//
-//        String password = passwordEncoder.encode(newUser.getPassword());
-//        newUser.setPassword(password);
-//
-//        userRepository.save(newUser);
-//        return SetResponse.setStatusMessageSuccess(null);
-//    }
-//
-//}
+
+
+}
