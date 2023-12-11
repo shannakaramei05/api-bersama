@@ -1,23 +1,18 @@
 package bakabakayow.restApi.services;
 
-import bakabakayow.restApi.dto.BookingsDTO;
 import bakabakayow.restApi.dto.RequestJoinBooking;
 import bakabakayow.restApi.dto.Response;
 import bakabakayow.restApi.model.Bookings;
-import bakabakayow.restApi.model.Fields;
 import bakabakayow.restApi.model.Users;
-import bakabakayow.restApi.model.Venues;
 import bakabakayow.restApi.repository.BookingRepository;
-import bakabakayow.restApi.repository.FieldRepository;
 import bakabakayow.restApi.repository.UserRepository;
-import bakabakayow.restApi.repository.VenueRepository;
 import bakabakayow.restApi.utils.SetResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -34,9 +29,12 @@ public class BookingService {
         return SetResponse.setStatusMessageSuccess(bookingRepository.findAll());
     }
 
-    public Response<Bookings> getBookingID(Long id) {
-        Bookings booking = bookingRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Booking Not Found"));
-        return SetResponse.setStatusMessageSuccess(booking);
+    @Transactional(readOnly = true)
+    public Response<List<Bookings>> getBookingID(Long id, LocalDateTime playDateStart) {
+        LocalDateTime truncatedPlayDateStart = playDateStart.toLocalDate().atStartOfDay();
+        List<Bookings> booking = bookingRepository.getBookingsByIdAndPlayDateStart(id,truncatedPlayDateStart);
+            return SetResponse.setStatusMessageSuccess(booking);
+
     }
 
     public Response<Bookings> addUserToBooking(Long bookingId,RequestJoinBooking userRequest, boolean add) {

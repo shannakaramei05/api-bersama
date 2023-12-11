@@ -52,6 +52,5 @@ public class VenuesController {
     public ResponseEntity<Venues> updateVenue(@PathVariable Long venueId, @RequestBody VenuesDTO venuesDTO) {
         Venues venue = venueService.updateDetailVenue(venueId,venuesDTO);
         return new ResponseEntity<>(venue,HttpStatus.ACCEPTED);
-
     }
 }

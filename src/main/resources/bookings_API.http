@@ -4,12 +4,12 @@ Content-Type: application/json
 ###
 
 ###
-GET localhost:8080/v1/api/bookings/2
+GET localhost:8080/v1/api/bookings/3
 Content-Type: application/json
 ###
 
 ###
-POST localhost:8080/v1/api/bookings/2/join
+POST localhost:8080/v1/api/bookings/3/join
 Content-Type: application/json
 
 {

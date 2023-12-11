@@ -5,9 +5,10 @@ import bakabakayow.restApi.dto.Response;
 import bakabakayow.restApi.model.Bookings;
 import bakabakayow.restApi.services.BookingService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -23,8 +24,13 @@ public class BookingController {
     }
 
     @GetMapping("/{id}")
-    public Response<Bookings> getBookingId(@PathVariable Long id) {
-        return bookingService.getBookingID(id);
+    public Response<List<Bookings>> getBookingId(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime playDateStart) {
+        if(playDateStart == null) {
+            playDateStart = LocalDateTime.now();
+        }
+        return bookingService.getBookingID(id,playDateStart);
     }
 
     @PostMapping("/{bookingId}/join")
