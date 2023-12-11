@@ -40,4 +40,15 @@ public class Bookings implements Serializable {
     @ManyToOne
     @JoinColumn(name = "field_id")
     private Fields field;
+
+
+    public void addRegisterdUser(Users user) {
+        this.registeredUser.add(user);
+        user.getBookings().add(this);
+    }
+
+    public void removeRegisterdUser(Users user) {
+        this.registeredUser.remove(user);
+        user.getBookings().remove(this);
+    }
 }

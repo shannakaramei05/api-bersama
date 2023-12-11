@@ -39,15 +39,17 @@ public class BookingService {
         return SetResponse.setStatusMessageSuccess(booking);
     }
 
-    public Response<Bookings> addUserToBooking(Long bookingId,RequestJoinBooking userRequest) {
+    public Response<Bookings> addUserToBooking(Long bookingId,RequestJoinBooking userRequest, boolean add) {
         Optional<Bookings> booking = bookingRepository.findById(bookingId);
         if(booking.isPresent()) {
             Users newUser = userRepository.findById(userRequest.getUserId()).orElseThrow(()-> new EntityNotFoundException("User Not Found"));
 
-            booking.get().getRegisteredUser().add(newUser);
-            newUser.getBookings().add(booking.get());
+            if(add) {
+                booking.get().addRegisterdUser(newUser);
+            } else {
+                booking.get().removeRegisterdUser(newUser);
+            }
             bookingRepository.save(booking.get());
-            userRepository.save(newUser);
             return SetResponse.setStatusMessageSuccess(booking.get());
         }
         return SetResponse.setErrorResponse("404", "Booking Not Found");

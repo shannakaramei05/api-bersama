@@ -29,6 +29,11 @@ public class BookingController {
 
     @PostMapping("/{bookingId}/join")
     public Response<Bookings> joinBooking(@PathVariable Long bookingId, @RequestBody RequestJoinBooking userRequest) {
-        return bookingService.addUserToBooking(bookingId,userRequest);
+        return bookingService.addUserToBooking(bookingId,userRequest,true);
+    }
+
+    @DeleteMapping("/{bookingId}/unjoin")
+    public Response<Bookings> unjoinBooking(@PathVariable Long bookingId, @RequestBody RequestJoinBooking userRequest) {
+        return bookingService.addUserToBooking(bookingId,userRequest,false);
     }
 }
