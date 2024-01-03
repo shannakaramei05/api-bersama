@@ -1,4 +1,4 @@
-use test_api_bersama;
+use api_bersama;
 
 SELECT * FROM users;
 SELECT * FROM fields;

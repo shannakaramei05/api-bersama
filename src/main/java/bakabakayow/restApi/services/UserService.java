@@ -1,22 +1,16 @@
 package bakabakayow.restApi.services;
 
 import bakabakayow.restApi.constants.UserRole;
-import bakabakayow.restApi.dto.AuthDto;
 import bakabakayow.restApi.dto.RegisterUserDTO;
 import bakabakayow.restApi.dto.Response;
 import bakabakayow.restApi.model.Users;
 import bakabakayow.restApi.repository.UserRepository;
 import bakabakayow.restApi.utils.SetResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
